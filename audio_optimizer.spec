@@ -1,24 +1,13 @@
 # -*- mode: python ; coding: utf-8 -*-
 
-import sys
-from PyInstaller.utils.hooks import collect_all
-
 block_cipher = None
-
-# Collect all pydub modules to fix audioop issues
-pydub_datas, pydub_binaries, pydub_hiddenimports = collect_all('pydub')
 
 a = Analysis(
     ['audio_optimizer.py'],
     pathex=[],
-    binaries=pydub_binaries,
-    datas=[('ffmpeg.exe', '.'), ('ffprobe.exe', '.')] + pydub_datas,
-    hiddenimports=[
-        'tkinter',
-        'tkinter.filedialog',
-        'tkinter.messagebox',
-        'tkinter.ttk',
-    ] + pydub_hiddenimports,
+    binaries=[],
+    datas=[('ffmpeg.exe', '.'), ('ffprobe.exe', '.')],
+    hiddenimports=['tkinter', 'tkinter.filedialog', 'tkinter.messagebox', 'tkinter.ttk'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],

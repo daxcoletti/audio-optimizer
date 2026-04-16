@@ -3,8 +3,8 @@ from tkinter import filedialog, messagebox, ttk
 import threading
 import os
 import sys
+import subprocess
 from pathlib import Path
-from pydub import AudioSegment
 
 class AudioOptimizer:
     def __init__(self, root):
@@ -13,27 +13,11 @@ class AudioOptimizer:
         self.root.geometry("450x300")
         self.root.resizable(False, False)
 
-        # Configure ffmpeg path if running as PyInstaller executable
-        self.setup_ffmpeg_path()
-
         self.selected_file = None
         self.is_processing = False
 
         # Build UI
         self.create_widgets()
-
-    def setup_ffmpeg_path(self):
-        """Configure ffmpeg path for pydub"""
-        if getattr(sys, 'frozen', False):
-            # Running as PyInstaller bundle
-            base_path = sys._MEIPASS
-            ffmpeg_path = os.path.join(base_path, 'ffmpeg.exe')
-            ffprobe_path = os.path.join(base_path, 'ffprobe.exe')
-
-            if os.path.exists(ffmpeg_path) and os.path.exists(ffprobe_path):
-                AudioSegment.converter = ffmpeg_path
-                AudioSegment.ffmpeg = ffmpeg_path
-                AudioSegment.ffprobe = ffprobe_path
 
     def create_widgets(self):
         """Create GUI components"""
@@ -145,9 +129,31 @@ class AudioOptimizer:
         thread = threading.Thread(target=self._process_audio, daemon=True)
         thread.start()
 
-    def _process_audio(self):
-        """Background thread: process audio"""
+    def get_ffmpeg_path(self):
+        """Get ffmpeg path - handles both PyInstaller bundles and system PATH"""
+        if getattr(sys, 'frozen', False):
+            # Running as PyInstaller executable
+            ffmpeg_path = os.path.join(sys._MEIPASS, 'ffmpeg.exe')
+            if os.path.exists(ffmpeg_path):
+                return ffmpeg_path
+
+        # Try system PATH
         try:
+            result = subprocess.run(['ffmpeg', '-version'], capture_output=True)
+            if result.returncode == 0:
+                return 'ffmpeg'
+        except:
+            pass
+
+        return None
+
+    def _process_audio(self):
+        """Background thread: process audio with ffmpeg"""
+        try:
+            ffmpeg_path = self.get_ffmpeg_path()
+            if not ffmpeg_path:
+                raise Exception("ffmpeg no encontrado. Asegúrate de que ffmpeg.exe esté en la carpeta del programa.")
+
             # Get file info
             input_path = self.selected_file
             file_size_before = os.path.getsize(input_path) / (1024 * 1024)  # MB
@@ -156,23 +162,23 @@ class AudioOptimizer:
             base, ext = os.path.splitext(input_path)
             output_path = f"{base}_optimized{ext}"
 
-            # Load audio
-            audio = AudioSegment.from_mp3(input_path)
-
-            # Convert to mono
-            if audio.channels > 1:
-                audio = audio.set_channels(1)
-
-            # Resample to 22050 Hz
-            audio = audio.set_frame_rate(22050)
-
-            # Export with 64kbps
-            audio.export(
+            # ffmpeg command: convert to mono, 22050Hz, 64kbps
+            cmd = [
+                ffmpeg_path,
+                '-i', input_path,
+                '-ac', '1',           # mono
+                '-ar', '22050',        # 22050 Hz sample rate
+                '-b:a', '64k',         # 64 kbps bitrate
+                '-q:a', '9',           # quality
                 output_path,
-                format="mp3",
-                bitrate="64k",
-                parameters=["-q:a", "9"]  # Ensure quality settings
-            )
+                '-y'                   # overwrite without asking
+            ]
+
+            # Run ffmpeg
+            result = subprocess.run(cmd, capture_output=True, text=True)
+
+            if result.returncode != 0:
+                raise Exception(f"ffmpeg error: {result.stderr}")
 
             # Get file sizes
             file_size_after = os.path.getsize(output_path) / (1024 * 1024)  # MB
