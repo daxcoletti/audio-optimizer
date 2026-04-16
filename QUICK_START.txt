@@ -1,0 +1,78 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                  AUDIO OPTIMIZER - QUICK START GUIDE                           ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+📋 LISTA DE VERIFICACIÓN (Completar antes de buildear):
+
+  [ ] Descargar ffmpeg desde: https://ffmpeg.org/download.html
+  [ ] Extraer el ZIP descargado
+  [ ] Copiar ffmpeg.exe a esta carpeta
+  [ ] Copiar ffprobe.exe a esta carpeta
+  [ ] Verificar que ambos .exe existan aquí
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 BUILDEAR EL .EXE:
+
+  En Windows:
+    1. Abre esta carpeta
+    2. Click-derecho en build.bat
+    3. Selecciona "Ejecutar" o doble-click
+    4. Espera a que termine (3-5 minutos)
+    5. Encuentra AudioOptimizer.exe en la carpeta "dist"
+
+  La primera vez toma más tiempo (instala dependencias).
+  Las siguientes veces es más rápido.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📖 DOCUMENTACIÓN DETALLADA:
+
+  README.md                    → Características y uso del programa
+  INSTALL.md                   → Paso-a-paso completo para buildear
+  PROJECT_SUMMARY.md           → Especificaciones técnicas y validación
+  test_dependencies.py         → Ejecutar para verificar dependencias
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❓ PROBLEMAS FRECUENTES:
+
+  ❌ "ffmpeg.exe no encontrado"
+     → Coloca ffmpeg.exe y ffprobe.exe en esta carpeta
+
+  ❌ "Python no es reconocido"
+     → Reinstala Python desde https://www.python.org
+     → Marca "Add Python to PATH"
+
+  ❌ El build falla
+     → Ejecuta: python test_dependencies.py
+     → Verifica que todas las pruebas pasen
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 DESARROLLO:
+
+  Para probar el código antes de buildear:
+    pip install -r requirements.txt
+    python audio_optimizer.py
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 QUÉ HACE:
+
+  1. Seleccionas un archivo MP3
+  2. Haces click en "Optimizar"
+  3. Se comprime automáticamente
+  4. Guardas como "archivo_optimized.mp3"
+
+  Resultado: 78 MB → 15 MB (-81%)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+¿Necesitas ayuda?
+
+  1. Lee INSTALL.md (instrucciones detalladas)
+  2. Ejecuta test_dependencies.py (detecta problemas)
+  3. Verifica que ffmpeg.exe esté en la carpeta
+
+¡Listo!

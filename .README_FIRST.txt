@@ -1,0 +1,62 @@
+┌────────────────────────────────────────────────────────────────────────────┐
+│                                                                            │
+│                    🎵 AUDIO OPTIMIZER - LEE ESTO PRIMERO                  │
+│                                                                            │
+│              Herramienta para comprimir MP3 en Windows                    │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
+
+
+⚡ INICIO RÁPIDO (30 segundos)
+
+  1. Abre QUICK_START.txt
+
+  Eso es. Ahí encontrarás todo lo que necesitas.
+
+
+📖 DOCUMENTACIÓN DISPONIBLE
+
+  QUICK_START.txt           ← Lee esto primero (muy corto)
+  README.md                 ← Características del programa
+  INSTALL.md                ← Paso-a-paso para buildear
+  PROJECT_SUMMARY.md        ← Especificaciones técnicas
+
+
+✅ LO QUE YA ESTÁ HECHO
+
+  ✓ Código fuente (audio_optimizer.py)
+  ✓ Configuración de build (audio_optimizer.spec)
+  ✓ Script automático (build.bat)
+  ✓ Toda la documentación
+  ✓ Pruebas (test_dependencies.py)
+
+
+❌ LO QUE NECESITAS AGREGAR (Una sola vez)
+
+  1. Descargar ffmpeg.exe desde:
+     https://ffmpeg.org/download.html
+
+  2. Descargar ffprobe.exe (viene con ffmpeg)
+
+  3. Copiar ambos archivos a esta carpeta
+
+
+🚀 DESPUÉS DE AGREGAR FFMPEG
+
+  En Windows:
+    • Doble-click en build.bat
+    • Esperar 3-5 minutos
+    • Usar: dist/AudioOptimizer.exe
+
+
+❓ ¿PROBLEMAS?
+
+  • Ejecuta: python test_dependencies.py
+  • Lee: INSTALL.md (sección Troubleshooting)
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+¡Comienza ahora! Abre QUICK_START.txt 👆
+
+═════════════════════════════════════════════════════════════════════════════
