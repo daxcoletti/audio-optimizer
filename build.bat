@@ -50,7 +50,7 @@ if %ERRORLEVEL% neq 0 (
 
 echo.
 echo [3/4] Compilando con PyInstaller...
-python -m PyInstaller audio_optimizer.spec
+python -m PyInstaller audio_optimizer.spec --collect-all pydub
 if %ERRORLEVEL% neq 0 (
     echo ERROR: Fallo en la compilacion
     pause
