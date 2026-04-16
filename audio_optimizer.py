@@ -4,7 +4,17 @@ import threading
 import os
 import sys
 from pathlib import Path
-from pydub import AudioSegment
+
+# Ensure pydub can find audio modules
+try:
+    from pydub import AudioSegment
+except ImportError as e:
+    if 'audioop' in str(e):
+        # Fallback for PyInstaller builds
+        import pydub.pyaudioop
+        from pydub import AudioSegment
+    else:
+        raise
 
 class AudioOptimizer:
     def __init__(self, root):
